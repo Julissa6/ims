@@ -4,11 +4,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.inventory.repository.UserRepository;
 import com.inventory.model.User;
+import com.inventory.repository.UserRepository;
 
 @Controller
 public class AuthController {
@@ -25,21 +26,19 @@ public class AuthController {
     // handle login
     @PostMapping("/login")
     public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        HttpSession session,
-                        Model model) {
+                         @RequestParam String password,
+                         HttpSession session) {
 
         User u = repo.findByUsername(username);
 
-        if (u != null && u.getPassword().equals(password)) {
+        if (u != null && u.getPassword() != null
+                && u.getPassword().equals(password)) {
 
             session.setAttribute("loggedUser", u);
-
             return "redirect:/dashboard";
         }
 
-        model.addAttribute("error", "Invalid username or password");
-        return "login";
+        return "redirect:/login?error";
     }
 
     // logout
