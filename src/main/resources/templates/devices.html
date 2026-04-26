@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Devices List</title>
+
+    <style>
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-home {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-home:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2 style="text-align:center;">All Devices</h2>
+
+<!-- ✅ BACK BUTTON -->
+<a href="/add-device" class="btn-home">+ Add Device</a>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Serial Number</th>
+        <th>Condition</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+
+    <!-- ✅ SINGLE CORRECT LOOP -->
+    <tr th:each="d : ${devices}">
+        <td th:text="${d.id}"></td>
+        <td th:text="${d.name}"></td>
+        <td th:text="${d.type}"></td>
+        <td th:text="${d.serialNumber}"></td>
+        <td th:text="${d.condition}"></td>
+        <td th:text="${d.status}"></td>
+
+        <td>
+           
+            <a th:href="@{'/edit-device/' + ${d.id}}"
+               style="color:skyblue;">
+               Update
+            </a>
+
+            |
+
+          
+            <a th:href="@{'/delete-device/' + ${d.id}}"
+               onclick="return confirm('Delete this device?')"
+               style="color:palevioletred;">
+               Delete
+            </a>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

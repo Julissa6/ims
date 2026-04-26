@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Assign Device</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 80px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Assign Device</h2>
+
+    <form action="/assign-save" method="post" th:object="${assignment}">
+
+        <label>Employee:</label>
+      <select th:field="*{employeeId}">
+    <option value="">-- Select Employee --</option>
+    <option th:each="e : ${employees}"
+            th:value="${e.id}"
+            th:text="${e.name}">
+    </option>
+</select>
+
+        <label>Device:</label>
+       <select th:field="*{deviceId}">
+    <option value="">-- Select Device --</option>
+    <option th:each="d : ${devices}"
+            th:value="${d.id}"
+            th:text="${d.name}">
+    </option>
+</select>
+
+        <button type="submit">Assign Device</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
